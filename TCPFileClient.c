@@ -9,6 +9,8 @@
 
 void DieWithError(char *errorMessage);
 
+void cleanBuffer(char *buffer, int size);
+
 int main(int argc, char *argv[]) {
     int sock; /*Socket descriptor*/
     struct sockaddr_in servAddr;

@@ -1,26 +1,32 @@
-#include <stdio.h> /*for printf() and fprintf()*/
-#include <sys/socket.h> /*for socket(), connect(), send(), and recv()*/
-#include <arpa/inet.h> /*for sockaddr_in and inet_addr()*/
+#include <stdio.h>
+/*使用socket库进行tcp连接和数据传输*/
+#include <sys/socket.h>
+#include <arpa/inet.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define MAXPENDING 5 /* Maximum outstanding connection requests */
+#define MAX_PENDING 5 /* Maximum outstanding connection requests */
 
-void DieWithError(char *errorMessage); /* Error handling function */
-void HandleTCPClient(int clntSocket);  /* TCP client handling function */
+void DieWithError(char *errorMessage);
+
+void HandleTCPClient(int clientSocket);
 
 int main(int argc, char *argv[]) {
 
-    int servSock; /* Socket descriptor for server */
-    int clntSock; /* Socket descriptor for client */
-    struct sockaddr_in echoServAddr; /* Local address */
-    struct sockaddr_in echoClntAddr; /* Client address */
-    unsigned short echoServPort; /* Server port */
-    unsigned int clntLen; /* Length of client address data structure */
+    /*描述符*/
+    int servSock;
+    int clntSock;
+    /*服务端地址为本地回环地址127.0.0.1*/
+    struct sockaddr_in echoServAddr;
+    struct sockaddr_in echoClntAddr;
+    /*服务端端口号*/
+    unsigned short echoServPort;
+    /*客户端地址长度*/
+    unsigned int clntLen;
 
-    if (argc != 2) /* Test for correct number of arguments */
-    {
-        fprintf(stderr, "Usage: %s <Server Port>\n", argv[0]);
+    /*必须传入端口号*/
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s <Port>\n", argv[0]);
         exit(1);
     }
 
@@ -43,7 +49,7 @@ int main(int argc, char *argv[]) {
         printf("bind succeed!\n");
 
     /* Mark the socket so it will listen for incoming connections */
-    if (listen(servSock, MAXPENDING) < 0)
+    if (listen(servSock, MAX_PENDING) < 0)
         DieWithError("listen() failed");
     else
         printf("listen succeed!\n");
