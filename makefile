@@ -22,4 +22,4 @@ TCPFileSever.o: TCPFileSever.c
 				CC -c TCPFileSever.c -std=c11
 
 clean:
-		rm -f	TCPFileClient.*	DieWithError.* HandleTCPClient.* TCPFileServer.*
+		rm -f	TCPFileClient.o	DieWithError.o HandleTCPClient.o TCPFileServer.o
